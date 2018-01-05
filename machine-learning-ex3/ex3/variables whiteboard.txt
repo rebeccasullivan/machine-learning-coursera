@@ -1,0 +1,10 @@
+n = 400
+m = 5000
+lambda = 0.1
+K = num_labels = 10
+
+X: 5000 x 400
+y: 5000 x 1
+
+theta: 10 x 401
+
