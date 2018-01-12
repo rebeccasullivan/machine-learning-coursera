@@ -64,13 +64,20 @@ a3 = sigmoid(z3)';
 
 h = a3;
 
-fprintf('Size of h: %d', size(h));
-
 % Compute cost function 
-J = (1 / m) * ones(1, 5000) * ((log(h) .* -y) - (log(1 - h) .* (1 - y))) * ones(10, 1);
+J = (1 / m) * ones(1, m) * ((log(h) .* -y) - (log(1 - h) .* (1 - y))) * ones(num_labels, 1);
 
+% Remove first column of Theta1 and Theta2 to avoid regularizing
+Theta1_without_1 = Theta1(:,2:end);
+Theta2_without_1 = Theta2(:,2:end);
 
-%
+lambda_factor = lambda / (2 * m);
+
+reg_component_1 = sum((Theta1_without_1 .* Theta1_without_1) * ones(columns(Theta1_without_1), 1));
+reg_component_2 = sum((Theta2_without_1 .* Theta2_without_1) * ones(columns(Theta2_without_1), 1));
+
+J += lambda_factor * (reg_component_1 + reg_component_2);
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -85,7 +92,8 @@ J = (1 / m) * ones(1, 5000) * ((log(h) .* -y) - (log(1 - h) .* (1 - y))) * ones(
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
-%
+
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
