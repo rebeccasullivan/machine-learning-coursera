@@ -41,6 +41,13 @@ Theta2_grad = zeros(size(Theta2));
 
 X = [ones(m, 1) X];
 
+temp = zeros(rows(y), num_labels);
+for i = 1:rows(y)
+	temp(i, y(i)) = 1;
+endfor;
+
+y = temp;
+
 % Compute a2
 a1 = X;	
 z2 = Theta1 * X';
@@ -49,21 +56,18 @@ a2 = sigmoid(z2);
 % Add bias element to a2
 a2 = [ones(1, columns(a2)); a2];
 
-% Compute a3	
+% Compute a3
 z3 = Theta2 * a2;
 a3 = sigmoid(z3)';
 
 [max, pred] = max(a3, [], 2);
 
-h = zeros(m, num_labels);
+h = a3;
 
-for i = 1:rows(h)
-	max_index = pred(i);
-	h(i, max_index) = 1;
-endfor;
+fprintf('Size of h: %d', size(h));
 
 % Compute cost function 
-J = (1 / m) * ((log(h') * -y) - (log(1 - h') * (1 - y)));
+J = (1 / m) * ones(1, 5000) * ((log(h) .* -y) - (log(1 - h) .* (1 - y))) * ones(10, 1);
 
 
 %
