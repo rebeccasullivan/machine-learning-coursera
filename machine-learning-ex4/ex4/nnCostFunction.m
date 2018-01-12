@@ -114,13 +114,19 @@ for t = 1:m
 	% Compute d3 (for output layer)
 	d3 = a3_t - y_t;
 	
-	% Compute d2 (hidden layer)
+	% Compute g'(z2) (hidden layer)
 	g_z2 = sigmoidGradient(Theta1 * a1');
 	g_z2 = [ones(1, columns(g_z2)); g_z2];
 	
+	% Compute d2, removing first term
 	d2 = (Theta2' * d3) .* g_z2;
 	d2 = d2(2:end); 
-	
+		
+	% Compute and accumulate deltas
+	DeltaSum = 0;
+	Delta1 = d2 * a1_t;
+	Delta2 = d3 * a2_t';
+	DeltaSum += Delta1 + Delta2;
 endfor;
 
 
