@@ -93,6 +93,36 @@ J += lambda_factor * (reg_component_1 + reg_component_2);
 %               over the training examples if you are implementing it for the 
 %               first time.
 
+for t = 1:m
+	% Get t-th training example
+	a1_t = X(t, :);
+	
+	% Compute a2
+	z2_t = Theta1 * a1';
+	a2_t = sigmoid(z2_t);
+	
+	% Add bias element to a2_t
+	a2_t = [ones(1, columns(a2_t)); a2_t];
+	
+	% Compute a3
+	z3_t = Theta2 * a2_t;
+	a3_t = sigmoid(z3_t);
+	
+	% Get t-th element of y - should be a 10 x 1 vector
+	y_t = y(t, :)';
+	
+	% Compute d3 (for output layer)
+	d3 = a3_t - y_t;
+	
+	% Compute d2 (hidden layer)
+	g_z2 = sigmoidGradient(Theta1 * a1');
+	g_z2 = [ones(1, columns(g_z2)); g_z2];
+	
+	d2 = (Theta2' * d3) .* g_z2;
+	d2 = d2(2:end); 
+	
+endfor;
+
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
