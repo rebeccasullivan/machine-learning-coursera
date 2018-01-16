@@ -35,7 +35,34 @@ h = a3 = g(z3) = Theta2 * a2'
 h				y
 10 x 5000		5000 x 10
 
+d3 			= 	a3' - 		y
+5000 x 10		5000 x 10	5000 x 10
 
+d2 = 		d3 * 		Theta2 		.* 	g'(z2')
+5000 x 25	5000 x 10	10 x 25			5000 x 25
+			
+
+z2 = 		Theta1 * 	a1'
+25 x 5000	25 x 401	401 x 5000
+
+temp = zeros(rows(y), num_labels);
+for i = 1:rows(y)
+	temp(i, y(i)) = 1;
+endfor;
+
+y = temp;
+
+% Compute a2
+a1 = X;	
+z2 = Theta1 * X';
+a2 = sigmoid(z2);
+	
+% Add bias element to a2
+a2 = [ones(1, columns(a2)); a2];
+
+% Compute a3
+z3 = Theta2 * a2;
+a3 = sigmoid(z3)';
 
 
 
