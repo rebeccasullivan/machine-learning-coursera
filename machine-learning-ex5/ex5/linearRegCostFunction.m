@@ -33,7 +33,6 @@ J = J_unreg + reg_param;
 
 grad = ((1 / m) * (X' * ((X * theta) - y))) + ((lambda / m) * theta_temp);
 
-
 grad = grad(:);
 
 end
