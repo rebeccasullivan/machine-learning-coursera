@@ -21,11 +21,31 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+distances = zeros(size(X,1), K);
+
+for i = 1:K
+	temp = bsxfun(@minus, X, centroids(i, :));
+	distances(:, i) = sum(temp .^ 2, 2);
+endfor;
+
+[minval, idx] = min(distances,[],2);
 
 
-
-
-
+% My original implementation
+% for i = 1:rows(X) 	
+%  	closest_centroid_index = 0;
+% 	min_j = realmax;
+% 	
+%  	for j = 1:K 		
+% 		current_j = (X(i, 1) - centroids(j, 1)) ^ 2 + (X(i, 2) - centroids(j, 2)) ^ 2;
+%  		if (current_j < min_j)
+%  			min_j = current_j;
+%  			closest_centroid_index = j;
+%  		endif;
+%  	endfor;
+ 	
+%  	idx(i) = closest_centroid_index;
+%  endfor;
 
 % =============================================================
 
