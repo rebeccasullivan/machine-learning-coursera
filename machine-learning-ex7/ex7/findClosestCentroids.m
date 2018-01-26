@@ -21,6 +21,7 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+% Recommended implementation
 distances = zeros(size(X,1), K);
 
 for i = 1:K
